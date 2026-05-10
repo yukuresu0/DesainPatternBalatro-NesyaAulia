@@ -1,11 +1,16 @@
-#include <iostream>
 #include "HandGenerator.h"
+#include "Deck.h"
+#include <iostream>
 
 Hand HandGenerator::generateHand() {
     std::cout << "Generating hand...\n";
 
+    Deck deck;
+    deck.initialize();
+    deck.shuffle();
+
     Hand hand;
-    hand.value = 6; // dummy: misalnya dianggap FLUSH
+    hand.cards = deck.draw(8); // 🔥 sekarang 8 kartu
 
     return hand;
 }
