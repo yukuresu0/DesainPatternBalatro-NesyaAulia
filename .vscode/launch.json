@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Lia/Documents/GitHub/DesainPatternBalatro-NesyaAulia",
-      "program": "c:/Users/Lia/Documents/GitHub/DesainPatternBalatro-NesyaAulia/build/Debug/outDebug",
+      "cwd": "c:/Users/TUF/Documents/GitHub/DesainPatternBalatro-NesyaAulia",
+      "program": "c:/Users/TUF/Documents/GitHub/DesainPatternBalatro-NesyaAulia/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
