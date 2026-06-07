@@ -197,3 +197,59 @@ Expected Result:
 * All systems execute successfully
 * No runtime errors occur
 * Gameplay flow completes correctly
+
+# 7. Joker System Tests
+
+## TC-19 FlushBonusJoker
+
+### Initial State
+
+HandRank = FLUSH
+
+### Action
+
+FlushBonusJoker applied
+
+### Expected Result
+
+Bonus Chips +30
+
+---
+
+## TC-20 BossBlindJoker
+
+### Initial State
+
+Current Blind = Boss Blind
+
+### Action
+
+BossBlindJoker applied
+
+### Expected Result
+
+Bonus Chips +50
+
+---
+
+# 8. Integration Test
+
+## TC-21 Complete Gameplay Flow
+
+Flow:
+
+Generate Cards
+→ Select Cards
+→ Detect Poker Hand
+→ Calculate Score
+→ Apply Joker
+→ Check Blind
+→ Receive Reward
+→ Open Shop
+→ Purchase Upgrade
+
+Expected Result:
+
+- All systems execute successfully
+- No runtime errors occur
+- Gameplay flow completes correctly
