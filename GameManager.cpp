@@ -1,75 +1,117 @@
+#include "GameManager.h"
+
 #include <iostream>
 #include <vector>
 
-#include "GameManager.h"
+#include "SmallBlindState.h"
 
-void GameManager::runSession() {
-    std::cout << "=== Run Started ===\n";
-
-    // 1. Generate 8 cards
-    Hand hand = handGenerator.generateHand();
-
-    // 2. Display generated cards
-    std::cout << "\n--- Generated Cards ---\n";
-    handPlayer.playHand(hand);
-
-    // 3. Player chooses up to 5 cards
-    std::vector<Card> chosenCards =
-        handPlayer.chooseCards(hand.cards);
-
-    // 4. Build selected hand
-    Hand selectedHand;
-    selectedHand.cards = chosenCards;
-
-    // 5. Display selected hand
-    std::cout << "\n--- Selected Hand ---\n";
-    handPlayer.playHand(selectedHand);
-
-    // 6. Detect poker hand + calculate score
-    int score =
-        scoringRule.scoreHand(selectedHand);
-
+void GameManager::runSession()
+{
     std::cout
-        << "\nFinal Score: "
-        << score
-        << "\n";
+        << "=== Run Started ===\n";
 
-    // 7. Check target score
-    bool win =
-        blindRule.checkBlind(score);
+    BlindState* currentBlind =
+        new SmallBlindState();
 
-    // 8. Give reward
-    rewardManager.giveReward(
-        win,
-        score,
-        money
-    );
+    while (currentBlind != nullptr)
+    {
+        std::cout
+            << "\n=====================\n";
 
-    // 9. Open shop if player wins
-    if (win) {
+        std::cout
+            << currentBlind->getName()
+            << "\n";
+
+        std::cout
+            << "Target Score: "
+            << currentBlind->getTargetScore()
+            << "\n";
+
+        std::cout
+            << "Reward: "
+            << currentBlind->getRewardMoney()
+            << "\n";
+
+        std::cout
+            << "=====================\n";
+
+        // Draw 8 cards
+        Hand hand =
+            handGenerator.generateHand();
+
+        std::cout
+            << "\n--- Generated Cards ---\n";
+
+        handPlayer.playHand(hand);
+
+        // Choose up to 5 cards
+        std::vector<Card> chosenCards =
+            handPlayer.chooseCards(
+                hand.cards
+            );
+
+        Hand selectedHand;
+        selectedHand.cards =
+            chosenCards;
+
+        std::cout
+            << "\n--- Selected Hand ---\n";
+
+        handPlayer.playHand(
+            selectedHand
+        );
+
+        // Score
+        int score =
+            scoringRule.scoreHand(
+                selectedHand,
+                upgrades
+            );
+
+        std::cout
+            << "\nFinal Score: "
+            << score
+            << "\n";
+
+        // Check blind
+        bool win =
+            blindRule.checkBlind(
+                score,
+                currentBlind->getTargetScore()
+            );
+
+        if (!win)
+        {
+            std::cout
+                << "\nRun Failed!\n";
+
+            delete currentBlind;
+            currentBlind = nullptr;
+
+            break;
+        }
+
+        // Reward
+        rewardManager.giveReward(
+            currentBlind->getRewardMoney(),
+            money
+        );
+
+        // Shop
         shopSystem.openShop(
             money,
             upgrades
         );
+
+        BlindState* nextBlind =
+            currentBlind->getNextState();
+
+        delete currentBlind;
+
+        currentBlind =
+            nextBlind;
     }
 
-    // Debug info
-    std::cout << "\n=== Player Status ===\n";
-
     std::cout
-        << "Money: "
-        << money.getAmount()
-        << "\n";
-
-    std::cout
-        << "Bonus Chips: "
-        << upgrades.bonusChips
-        << "\n";
-
-    std::cout
-        << "Bonus Mult: "
-        << upgrades.bonusMult
-        << "\n";
-
-    std::cout << "\n=== Run Ended ===\n";
+        << "\n=== Run Ended ===\n";
 }

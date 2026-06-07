@@ -8,7 +8,7 @@ bool BlindRule::checkBlind(
     std::cout << "Checking blind...\n";
     std::cout << "Target Score: "
               << targetScore
-              << "\n";
+           << std::endl;
 
     if (score >= targetScore) {
         std::cout << "Result: WIN\n";
