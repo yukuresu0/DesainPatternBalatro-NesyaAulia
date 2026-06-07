@@ -1,11 +1,13 @@
 #pragma once
+
 #include "HandGenerator.h"
 #include "HandPlayer.h"
 #include "ScoringRule.h"
 #include "BlindRule.h"
-#include "RewardRule.h"
+
 #include "RewardManager.h"
 #include "Money.h"
+
 #include "ShopSystem.h"
 #include "UpgradeData.h"
 

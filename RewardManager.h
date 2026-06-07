@@ -5,13 +5,7 @@
 class RewardManager {
 public:
     void giveReward(
-        bool win,
-        int score,
+        int reward,
         Money& money
-    );
-
-private:
-    int calculateReward(
-        int score
     );
 };
