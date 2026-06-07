@@ -13,7 +13,7 @@ void GameManager::runSession() {
     std::cout << "\n--- Generated Cards ---\n";
     handPlayer.playHand(hand);
 
-    // 3. Player chooses 5 cards
+    // 3. Player chooses up to 5 cards
     std::vector<Card> chosenCards =
         handPlayer.chooseCards(hand.cards);
 
@@ -25,22 +25,51 @@ void GameManager::runSession() {
     std::cout << "\n--- Selected Hand ---\n";
     handPlayer.playHand(selectedHand);
 
-    // 6. Calculate score
+    // 6. Detect poker hand + calculate score
     int score =
         scoringRule.scoreHand(selectedHand);
 
-    // 7. Check win / lose
+    std::cout
+        << "\nFinal Score: "
+        << score
+        << "\n";
+
+    // 7. Check target score
     bool win =
         blindRule.checkBlind(score);
 
-    // 8. Calculate reward
-    int reward =
-        rewardRule.earnMoney(win, score);
+    // 8. Give reward
+    rewardManager.giveReward(
+        win,
+        score,
+        money
+    );
 
-    // 9. Final result
-    std::cout << "Money gained: "
-              << reward
-              << std::endl;
+    // 9. Open shop if player wins
+    if (win) {
+        shopSystem.openShop(
+            money,
+            upgrades
+        );
+    }
 
-    std::cout << "=== Run Ended ===\n";
+    // Debug info
+    std::cout << "\n=== Player Status ===\n";
+
+    std::cout
+        << "Money: "
+        << money.getAmount()
+        << "\n";
+
+    std::cout
+        << "Bonus Chips: "
+        << upgrades.bonusChips
+        << "\n";
+
+    std::cout
+        << "Bonus Mult: "
+        << upgrades.bonusMult
+        << "\n";
+
+    std::cout << "\n=== Run Ended ===\n";
 }
