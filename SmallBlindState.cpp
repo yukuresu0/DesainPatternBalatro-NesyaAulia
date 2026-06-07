@@ -1,4 +1,5 @@
 #include "SmallBlindState.h"
+#include "BigBlindState.h"
 
 std::string SmallBlindState::getName()
 {
@@ -17,5 +18,5 @@ int SmallBlindState::getRewardMoney()
 
 BlindState* SmallBlindState::getNextState()
 {
-    return nullptr;
+    return new BigBlindState();
 }

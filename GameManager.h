@@ -4,6 +4,10 @@
 #include "ScoringRule.h"
 #include "BlindRule.h"
 #include "RewardRule.h"
+#include "RewardManager.h"
+#include "Money.h"
+#include "ShopSystem.h"
+#include "UpgradeData.h"
 
 class GameManager {
 public:
@@ -14,5 +18,10 @@ private:
     HandPlayer handPlayer;
     ScoringRule scoringRule;
     BlindRule blindRule;
-    RewardRule rewardRule;
+
+    RewardManager rewardManager;
+    Money money;
+
+    ShopSystem shopSystem;
+    UpgradeData upgrades;
 };

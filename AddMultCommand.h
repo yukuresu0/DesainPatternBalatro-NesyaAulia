@@ -2,7 +2,9 @@
 
 #include "ShopCommand.h"
 
-class AddMultCommand : public ShopCommand {
+class AddMultCommand
+    : public ShopCommand
+{
 public:
     void execute(
         UpgradeData& upgrades

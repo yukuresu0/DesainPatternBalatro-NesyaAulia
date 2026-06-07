@@ -7,7 +7,7 @@ std::string BossBlindState::getName()
 
 int BossBlindState::getTargetScore()
 {
-    return 300;
+    return 400;
 }
 
 int BossBlindState::getRewardMoney()
