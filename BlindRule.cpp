@@ -1,10 +1,16 @@
 #include <iostream>
 #include "BlindRule.h"
 
-bool BlindRule::checkBlind(int score) {
+bool BlindRule::checkBlind(
+    int score,
+    int targetScore
+) {
     std::cout << "Checking blind...\n";
+    std::cout << "Target Score: "
+              << targetScore
+              << "\n";
 
-    if (score >= 10) {
+    if (score >= targetScore) {
         std::cout << "Result: WIN\n";
         return true;
     }
