@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-enum class HandRank {
+enum HandRank {
     HIGH_CARD,
     PAIR,
     TWO_PAIR,

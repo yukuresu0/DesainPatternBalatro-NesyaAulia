@@ -4,16 +4,17 @@
 void RewardManager::giveReward(
     int reward,
     Money& money
-) {
+)
+{
     money.add(reward);
 
     std::cout
-        << "Reward earned: "
+        << "Reward Earned: "
         << reward
         << "\n";
 
     std::cout
-        << "Current money: "
+        << "Current Money: "
         << money.getAmount()
         << "\n";
 }

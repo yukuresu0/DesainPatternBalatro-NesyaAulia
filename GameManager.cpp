@@ -35,7 +35,7 @@ void GameManager::runSession()
         std::cout
             << "=====================\n";
 
-        // Draw 8 cards
+// Draw 8 cards
         Hand hand =
             handGenerator.generateHand();
 
