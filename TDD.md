@@ -136,9 +136,22 @@ Tanggung jawab:
 
 ---
 
-### 3.2 ScoringRule
+### 3.2 Scoring System
 
-Mengubah hasil evaluasi poker hand menjadi score.
+ScoringRule bertanggung jawab menghitung score akhir berdasarkan poker hand yang diperoleh pemain.
+
+Perhitungan score dilakukan menggunakan tiga komponen:
+
+* Base Chips berdasarkan jenis poker hand.
+* Card Chips berdasarkan nilai kartu yang dimainkan.
+* Multiplier berdasarkan jenis poker hand dan upgrade yang dimiliki pemain.
+
+Formula yang digunakan:
+
+Final Score = (Base Chips + Card Chips + Bonus Chips) × (Base Mult + Bonus Mult)
+
+Upgrade yang dibeli pemain melalui Shop System akan mempengaruhi Bonus Chips dan Bonus Mult yang digunakan dalam perhitungan score.
+
 
 ---
 
@@ -172,6 +185,27 @@ struct UpgradeData {
 ```
 
 ---
+
+### 3.7 Joker System
+
+Sistem Joker disiapkan untuk memberikan modifier tambahan terhadap score pemain.
+
+Implemented Jokers:
+
+* FlushBonusJoker
+
+  * Memberikan bonus Chips ketika pemain mendapatkan Flush.
+
+* PairMultJoker
+
+  * Memberikan bonus Multiplier ketika pemain mendapatkan Pair.
+
+* LuckyMoneyJoker
+
+  * Memberikan bonus Money tambahan.
+
+Joker dikelola oleh JokerManager dan dirancang untuk diintegrasikan dengan sistem scoring sebagai pengembangan berikutnya.
+
 
 ## 4. Supported Poker Hands
 

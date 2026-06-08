@@ -1,10 +1,24 @@
 #pragma once
+
 #include <vector>
 
-class Joker;
+#include "Joker.h"
 
 class JokerManager
 {
 private:
     std::vector<Joker*> jokers;
+
+public:
+    void addJoker(
+        Joker* joker
+    );
+
+    int getTotalBonusChips(
+        HandRank rank
+    );
+
+    int getTotalBonusMult(
+        HandRank rank
+    );
 };
