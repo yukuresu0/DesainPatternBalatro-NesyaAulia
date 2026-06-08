@@ -10,6 +10,7 @@
 
 #include "ShopSystem.h"
 #include "UpgradeData.h"
+#include "BlindManager.h"
 
 class GameManager {
 public:
@@ -20,6 +21,7 @@ private:
     HandPlayer handPlayer;
     ScoringRule scoringRule;
     BlindRule blindRule;
+    BlindManager blindManager;
 
     RewardManager rewardManager;
     Money money;

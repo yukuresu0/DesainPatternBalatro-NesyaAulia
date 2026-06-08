@@ -11,7 +11,7 @@ void GameManager::runSession()
         << "=== Run Started ===\n";
 
     BlindState* currentBlind =
-        new SmallBlindState();
+        blindManager.getCurrentBlind();
 
     while (currentBlind != nullptr)
     {
@@ -103,13 +103,10 @@ void GameManager::runSession()
             upgrades
         );
 
-        BlindState* nextBlind =
-            currentBlind->getNextState();
-
-        delete currentBlind;
+        blindManager.advanceBlind();
 
         currentBlind =
-            nextBlind;
+            blindManager.getCurrentBlind();
     }
 
     std::cout
