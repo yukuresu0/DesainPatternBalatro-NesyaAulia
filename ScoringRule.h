@@ -4,7 +4,8 @@
 #include "HandRank.h"
 #include "UpgradeData.h"
 
-class ScoringRule {
+class ScoringRule
+{
 public:
     int scoreHand(
         const Hand& hand,

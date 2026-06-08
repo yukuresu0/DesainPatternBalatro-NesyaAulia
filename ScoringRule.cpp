@@ -15,6 +15,7 @@
 #include "TwoPairChecker.h"
 #include "PairChecker.h"
 #include "HighCardChecker.h"
+#include "HandScoreTable.h"
 
 int ScoringRule::scoreHand(
     const Hand& hand,
