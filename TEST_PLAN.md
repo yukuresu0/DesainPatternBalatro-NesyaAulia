@@ -212,44 +212,147 @@ FlushBonusJoker applied
 
 ### Expected Result
 
-Bonus Chips +30
+- Bonus Chips +50
+- Bonus Mult +0
 
 ---
 
-## TC-20 BossBlindJoker
+## TC-20 FlushBonusJoker (Invalid Hand)
 
 ### Initial State
 
-Current Blind = Boss Blind
+HandRank = PAIR
 
 ### Action
 
-BossBlindJoker applied
+FlushBonusJoker applied
 
 ### Expected Result
 
-Bonus Chips +50
+- Bonus Chips +0
+- Bonus Mult +0
+
+---
+
+## TC-21 PairMultJoker
+
+### Initial State
+
+HandRank = PAIR
+
+### Action
+
+PairMultJoker applied
+
+### Expected Result
+
+- Bonus Chips +0
+- Bonus Mult +4
+
+---
+
+## TC-22 PairMultJoker (Invalid Hand)
+
+### Initial State
+
+HandRank = FLUSH
+
+### Action
+
+PairMultJoker applied
+
+### Expected Result
+
+- Bonus Chips +0
+- Bonus Mult +0
+
+---
+
+## TC-23 LuckyMoneyJoker
+
+### Initial State
+
+LuckyMoneyJoker owned
+
+### Action
+
+getBonusMoney()
+
+### Expected Result
+
+- Bonus Money +5
 
 ---
 
 # 8. Integration Test
 
-## TC-21 Complete Gameplay Flow
+## TC-24 Complete Gameplay Flow
 
-Flow:
+### Flow
 
 Generate Cards
 → Select Cards
 → Detect Poker Hand
-→ Calculate Score
-→ Apply Joker
+→ Calculate Chips
+→ Calculate Mult
+→ Apply Joker Effects
+→ Calculate Final Score
 → Check Blind
 → Receive Reward
 → Open Shop
-→ Purchase Upgrade
+
+### Expected Result
+
+- All systems execute successfully
+- Joker bonuses are applied correctly
+- No runtime errors occur
+- Gameplay flow completes correctly
+
+# Blind Progression Tests
+
+## TC-25 Small Blind Progression
+
+Initial State:
+
+* Current Blind = Small Blind
+
+Action:
+
+* Player successfully clears Small Blind
 
 Expected Result:
 
-- All systems execute successfully
-- No runtime errors occur
-- Gameplay flow completes correctly
+* Current Blind changes to Big Blind
+
+---
+
+## TC-26 Big Blind Progression
+
+Initial State:
+
+* Current Blind = Big Blind
+
+Action:
+
+* Player successfully clears Big Blind
+
+Expected Result:
+
+* Current Blind changes to Boss Blind
+
+---
+
+## TC-27 Boss Blind Completion
+
+Initial State:
+
+* Current Blind = Boss Blind
+
+Action:
+
+* Player successfully clears Boss Blind
+
+Expected Result:
+
+* Blind progression completes successfully
+* Run continues according to game flow

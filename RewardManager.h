@@ -2,7 +2,8 @@
 
 #include "Money.h"
 
-class RewardManager {
+class RewardManager
+{
 public:
     void giveReward(
         int reward,
