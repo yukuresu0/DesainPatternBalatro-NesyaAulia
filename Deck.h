@@ -9,4 +9,6 @@ public:
     void initialize();
     void shuffle();
     std::vector<Card> draw(int n);
+
+    int remainingCards() const;
 };
