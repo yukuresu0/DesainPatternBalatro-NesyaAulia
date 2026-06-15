@@ -242,8 +242,21 @@ else
         break;
     }
 
+    int reward =
+        currentBlind->getRewardMoney();
+
+    if (
+        upgrades.luckyMoneyJoker
+    )
+    {
+        reward += 5;
+
+        std::cout
+            << "\nLucky Money Joker Activated! +5 Money\n";
+    }
+
     rewardManager.giveReward(
-        currentBlind->getRewardMoney(),
+        reward,
         money
     );
 
@@ -253,6 +266,7 @@ else
     );
 
     blindManager.advanceBlind();
+
 
     currentBlind =
         blindManager.getCurrentBlind();

@@ -22,6 +22,15 @@ void ShopSystem::openShop(
         << "2. +1 Mult (Cost 10)\n";
 
     std::cout
+        << "3. Pair Mult Joker (Cost 15)\n";
+
+    std::cout
+        << "4. Flush Bonus Joker (Cost 10)\n";
+
+    std::cout
+        << "5. Lucky Money Joker (Cost 5)\n";
+
+    std::cout
         << "0. Exit\n";
 
     int choice;
@@ -40,6 +49,18 @@ void ShopSystem::openShop(
 
         case 2:
             cost = 10;
+            break;
+
+        case 3:
+            cost = 15;
+            break;
+        
+        case 4:
+            cost = 10;
+            break;
+
+        case 5:
+            cost = 5;
             break;
 
         default:
