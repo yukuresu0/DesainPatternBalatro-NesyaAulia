@@ -13,12 +13,14 @@ std::string rankToString(int rank) {
     }
 }
 
-std::string suitToString(int suit) {
-    switch (suit) {
-        case 0: return "Spades";
-        case 1: return "Hearts";
-        case 2: return "Diamonds";
-        case 3: return "Clubs";
+std::string suitToString(int suit)
+{
+    switch (suit)
+    {
+        case 0: return "S";
+        case 1: return "H";
+        case 2: return "D";
+        case 3: return "C";
         default: return "?";
     }
 }
@@ -28,12 +30,16 @@ void HandPlayer::playHand(const Hand& hand) {
 
     for (int i = 0; i < hand.cards.size(); i++) {
         std::cout
-            << i
-            << ": "
-            << rankToString(hand.cards[i].rank)
-            << " of "
-            << suitToString(hand.cards[i].suit)
-            << "\n";
+        << "["
+        << i
+        << "] "
+        << rankToString(
+        hand.cards[i].rank
+    )
+        << suitToString(
+        hand.cards[i].suit
+    )
+        << "\n";
     }
 }
 
