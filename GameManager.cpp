@@ -2,6 +2,7 @@
 #include "Deck.h"
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "SmallBlindState.h"
 
@@ -35,6 +36,69 @@ void GameManager::runSession()
     std::cout
         << "=====================\n";
 
+    // ===== Blind Menu =====
+
+int choice;
+
+if(
+    currentBlind->getName() !=
+    "Boss Blind"
+)
+{
+    std::cout
+        << "\n1. Play Blind\n";
+
+    std::cout
+        << "2. Skip "
+        << currentBlind->getName()
+        << "\n";
+
+    std::cout
+        << "0. Exit Game\n";
+
+    std::cin >> choice;
+
+    if(choice == 0)
+    {
+        std::cout
+            << "\n=== Run Ended ===\n";
+
+        return;
+    }
+
+    if(choice == 2)
+    {
+        std::cout
+            << "\nSkipping "
+            << currentBlind->getName()
+            << "...\n";
+
+        blindManager.advanceBlind();
+
+        currentBlind =
+            blindManager.getCurrentBlind();
+
+        continue;
+    }
+}
+else
+{
+    std::cout
+        << "\n1. Play Blind\n";
+
+    std::cout
+        << "0. Exit Game\n";
+
+    std::cin >> choice;
+
+    if(choice == 0)
+    {
+        std::cout
+            << "\n=== Run Ended ===\n";
+
+        return;
+    }
+}
     // ===== NEW =====
     Deck deck;
     deck.initialize();
