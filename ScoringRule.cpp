@@ -48,60 +48,84 @@ int ScoringRule::scoreHand(
     twoPair.setNext(&pair);
     pair.setNext(&highCard);
 
-    HandRank detectedRank =
-        royalFlush.check(hand);
+   HandRank detectedRank =
+    royalFlush.check(hand);
+
+std::cout
+    << "Final Hand: "
+    << handRankToString(detectedRank)
+    << std::endl;
+
+int chips =
+    convertRankToChips(
+        detectedRank
+    );
+
+chips +=
+    calculateCardChips(
+        hand
+    );
+
+int mult =
+    convertRankToMult(
+        detectedRank
+    );
+
+chips += upgrades.bonusChips;
+mult += upgrades.bonusMult;
+
+// Pair Mult Joker
+if (
+    upgrades.pairMultJoker &&
+    detectedRank == HandRank::PAIR
+)
+{
+    mult += 2;
 
     std::cout
-        << "Final Hand: "
-        << handRankToString(detectedRank)
-        << std::endl;
+        << "Pair Mult Joker Activated! +2 Mult\n";
+}
 
-    int chips =
-        convertRankToChips(
-            detectedRank
-        );
-
-    chips +=
-        calculateCardChips(
-            hand
-        );
-
-    int mult =
-        convertRankToMult(
-            detectedRank
-        );
-
-    chips += upgrades.bonusChips;
-    mult += upgrades.bonusMult;
-
-    if (mult < 1) {
-        mult = 1;
-    }
-
-    int finalScore =
-        chips * mult;
+if (
+    upgrades.flushBonusJoker &&
+    detectedRank == HandRank::FLUSH
+)
+{
+    chips += 20;
 
     std::cout
-        << "Card Chips: "
-        << calculateCardChips(hand)
-        << std::endl;
+        << "Flush Bonus Joker Activated! +20 Chips\n";
+}
 
-    std::cout
-        << "Chips: "
-        << chips
-        << std::endl;
+if (mult < 1)
+{
+    mult = 1;
+}
 
-    std::cout
-        << "Mult: "
-        << mult
-        << std::endl;
+int finalScore =
+    chips * mult;
 
-    std::cout
-        << "Final Score: "
-        << finalScore
-        << std::endl;
+std::cout
+    << "Card Chips: "
+    << calculateCardChips(hand)
+    << std::endl;
 
-    return finalScore;
+std::cout
+    << "Chips: "
+    << chips
+    << std::endl;
+
+std::cout
+    << "Mult: "
+    << mult
+    << std::endl;
+
+std::cout
+    << "Final Score: "
+    << finalScore
+    << std::endl;
+
+return finalScore;
 }
 
 int ScoringRule::calculateCardChips(

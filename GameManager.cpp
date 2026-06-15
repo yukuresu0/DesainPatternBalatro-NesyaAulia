@@ -1,7 +1,8 @@
 #include "GameManager.h"
-
+#include "Deck.h"
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "SmallBlindState.h"
 
@@ -11,43 +12,132 @@ void GameManager::runSession()
         << "=== Run Started ===\n";
 
     BlindState* currentBlind =
-        new SmallBlindState();
+        blindManager.getCurrentBlind();
 
     while (currentBlind != nullptr)
+{
+    std::cout
+        << "\n=====================\n";
+
+    std::cout
+        << currentBlind->getName()
+        << "\n";
+
+    std::cout
+        << "Target Score: "
+        << currentBlind->getTargetScore()
+        << "\n";
+
+    std::cout
+        << "Reward: "
+        << currentBlind->getRewardMoney()
+        << "\n";
+
+    std::cout
+        << "=====================\n";
+
+    // ===== Blind Menu =====
+
+int choice;
+
+if(
+    currentBlind->getName() !=
+    "Boss Blind"
+)
+{
+    std::cout
+        << "\n1. Play Blind\n";
+
+    std::cout
+        << "2. Skip "
+        << currentBlind->getName()
+        << "\n";
+
+    std::cout
+        << "0. Exit Game\n";
+
+    std::cin >> choice;
+
+    if(choice == 0)
     {
         std::cout
-            << "\n=====================\n";
+            << "\n=== Run Ended ===\n";
 
+        return;
+    }
+
+    if(choice == 2)
+    {
         std::cout
+            << "\nSkipping "
             << currentBlind->getName()
+            << "...\n";
+
+        blindManager.advanceBlind();
+
+        currentBlind =
+            blindManager.getCurrentBlind();
+
+        continue;
+    }
+}
+else
+{
+    std::cout
+        << "\n1. Play Blind\n";
+
+    std::cout
+        << "0. Exit Game\n";
+
+    std::cin >> choice;
+
+    if(choice == 0)
+    {
+        std::cout
+            << "\n=== Run Ended ===\n";
+
+        return;
+    }
+}
+    // ===== NEW =====
+    Deck deck;
+    deck.initialize();
+    deck.shuffle();
+
+    Hand currentHand;
+    currentHand.cards = deck.draw(8);
+
+    int totalScore = 0;
+    int handsRemaining = 4;
+
+    while (
+        handsRemaining > 0 &&
+        totalScore < currentBlind->getTargetScore()
+    )
+    {
+        std::cout
+            << "\nHands Remaining: "
+            << handsRemaining
             << "\n";
 
         std::cout
-            << "Target Score: "
-            << currentBlind->getTargetScore()
+            << "Total Score: "
+            << totalScore
             << "\n";
 
         std::cout
-            << "Reward: "
-            << currentBlind->getRewardMoney()
+            << "Deck Remaining: "
+            << deck.remainingCards()
             << "\n";
 
         std::cout
-            << "=====================\n";
+            << "\n--- Current Hand ---\n";
 
-// Draw 8 cards
-        Hand hand =
-            handGenerator.generateHand();
+        handPlayer.playHand(currentHand);
 
-        std::cout
-            << "\n--- Generated Cards ---\n";
-
-        handPlayer.playHand(hand);
-
-        // Choose up to 5 cards
         std::vector<Card> chosenCards =
             handPlayer.chooseCards(
-                hand.cards
+                currentHand.cards
             );
 
         Hand selectedHand;
@@ -61,56 +151,126 @@ void GameManager::runSession()
             selectedHand
         );
 
-        // Score
         int score =
             scoringRule.scoreHand(
                 selectedHand,
                 upgrades
             );
 
+        totalScore += score;
+
         std::cout
-            << "\nFinal Score: "
+            << "\nHand Score: "
             << score
             << "\n";
 
-        // Check blind
-        bool win =
-            blindRule.checkBlind(
-                score,
-                currentBlind->getTargetScore()
-            );
+        std::cout
+            << "Total Score: "
+            << totalScore
+            << "\n";
 
-        if (!win)
+        // Remove played cards from hand
+        std::vector<Card> remainingCards;
+
+        for(const Card& handCard : currentHand.cards)
         {
-            std::cout
-                << "\nRun Failed!\n";
+            bool used = false;
 
-            delete currentBlind;
-            currentBlind = nullptr;
+            for(const Card& playedCard : chosenCards)
+            {
+                if(
+                    handCard.rank ==
+                    playedCard.rank
+                    &&
+                    handCard.suit ==
+                    playedCard.suit
+                )
+                {
+                    used = true;
+                    break;
+                }
+            }
 
-            break;
+            if(!used)
+            {
+                remainingCards.push_back(
+                    handCard
+                );
+            }
         }
 
-        // Reward
-        rewardManager.giveReward(
-            currentBlind->getRewardMoney(),
-            money
-        );
+        currentHand.cards =
+            remainingCards;
 
-        // Shop
-        shopSystem.openShop(
-            money,
-            upgrades
-        );
+        // Draw replacement cards
+        int needCards =
+            8 -
+            currentHand.cards.size();
 
-        BlindState* nextBlind =
-            currentBlind->getNextState();
+        if(deck.remainingCards() > 0)
+        {
+            int drawCount =
+                std::min(
+                    needCards,
+                    deck.remainingCards()
+                );
 
-        delete currentBlind;
+            std::vector<Card> newCards =
+                deck.draw(drawCount);
 
-        currentBlind =
-            nextBlind;
+            currentHand.cards.insert(
+                currentHand.cards.end(),
+                newCards.begin(),
+                newCards.end()
+            );
+        }
+
+        handsRemaining--;
     }
+
+    bool win =
+        blindRule.checkBlind(
+            totalScore,
+            currentBlind->getTargetScore()
+        );
+
+    if (!win)
+    {
+        std::cout
+            << "\nRun Failed!\n";
+
+        break;
+    }
+
+    int reward =
+        currentBlind->getRewardMoney();
+
+    if (
+        upgrades.luckyMoneyJoker
+    )
+    {
+        reward += 5;
+
+        std::cout
+            << "\nLucky Money Joker Activated! +5 Money\n";
+    }
+
+    rewardManager.giveReward(
+        reward,
+        money
+    );
+
+    shopSystem.openShop(
+        money,
+        upgrades
+    );
+
+    blindManager.advanceBlind();
+
+
+    currentBlind =
+        blindManager.getCurrentBlind();
+}
 
     std::cout
         << "\n=== Run Ended ===\n";
