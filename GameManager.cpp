@@ -113,6 +113,7 @@ else
 
     int totalScore = 0;
     int handsRemaining = 4;
+    int discardsRemaining = 3;
 
     while (
         handsRemaining > 0 &&
@@ -127,6 +128,11 @@ else
         std::cout
             << "Total Score: "
             << totalScore
+            << "\n";
+
+        std::cout
+            << "Discards Remaining: "
+            << discardsRemaining
             << "\n";
 
         std::cout
@@ -148,12 +154,130 @@ else
         selectedHand.cards =
             chosenCards;
 
+        int actionChoice;
+
+        std::cout
+            << "\n1. Play Hand\n";
+
+        if(discardsRemaining > 0)
+        {
+            std::cout
+                << "2. Discard\n";
+        }
+
+        std::cout
+            << "3. Cancel Selection\n";
+
+        std::cin >> actionChoice;
+
+        if(actionChoice == 3)
+        {
+            std::cout
+                << "\nSelection cancelled.\n";
+
+            continue;
+        }
+
+        if(discardsRemaining > 0)
+        {
+            std::cout
+                << "2. Discard\n";
+        }
+
+            else if(actionChoice == 3)
+{
+    std::cout
+        << "\nSelection cancelled.\n";
+
+    continue;
+}
+
+        std::cin >> actionChoice;
+
         std::cout
             << "\n--- Selected Hand ---\n";
 
         handPlayer.playHand(
             selectedHand
         );
+
+            if(
+        actionChoice == 2
+        &&
+        discardsRemaining > 0
+    )
+    {
+        std::vector<Card> remainingCards;
+
+        for(
+            const Card& handCard :
+            currentHand.cards
+        )
+        {
+            bool discarded = false;
+
+            for(
+                const Card& selected :
+                chosenCards
+            )
+            {
+                if(
+                    handCard.rank ==
+                    selected.rank
+                    &&
+                    handCard.suit ==
+                    selected.suit
+                )
+                {
+                    discarded = true;
+                    break;
+                }
+            }
+
+            if(!discarded)
+            {
+                remainingCards.push_back(
+                    handCard
+                );
+            }
+        }
+
+        currentHand.cards =
+            remainingCards;
+
+        int drawCount =
+            chosenCards.size();
+
+        std::vector<Card> newCards =
+            deck.draw(drawCount);
+
+        currentHand.cards.insert(
+            currentHand.cards.end(),
+            newCards.begin(),
+            newCards.end()
+        );
+
+        discardsRemaining--;
+
+        std::cout
+            << "\nDiscarded "
+            << drawCount
+            << " cards.\n";
+        
+            std::cout
+            << "\n--- New Hand ---\n";
+
+        handPlayer.playHand(
+            currentHand
+        );
+
+        std::cout
+            << "Discards Remaining: "
+            << discardsRemaining
+            << "\n";
+
+        continue;
+    }
 
         int score =
             scoringRule.scoreHand(
