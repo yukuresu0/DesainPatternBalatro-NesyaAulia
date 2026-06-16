@@ -68,17 +68,21 @@ if(
 
     if(choice == 2)
     {
-        std::cout
-            << "\nSkipping "
-            << currentBlind->getName()
-            << "...\n";
+    std::cout
+        << "\nSkipping "
+        << currentBlind->getName()
+        << "...\n";
 
-        blindManager.advanceBlind();
+    tagSystem.giveRandomTag(
+        upgrades
+    );
 
-        currentBlind =
-            blindManager.getCurrentBlind();
+    blindManager.advanceBlind();
 
-        continue;
+    currentBlind =
+        blindManager.getCurrentBlind();
+
+    continue;
     }
 }
 else
@@ -243,7 +247,9 @@ else
     }
 
     int reward =
-        currentBlind->getRewardMoney();
+    currentBlind->getRewardMoney()
+    +
+    upgrades.bonusMoneyPerBlind;
 
     if (
         upgrades.luckyMoneyJoker
