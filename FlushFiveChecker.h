@@ -4,7 +4,7 @@
 class FlushFiveChecker : public PokerHandChecker {
 public:
     HandRank check(const Hand& hand) override {
-        std::cout << "Checking Flush Five...\n";
+//       std::cout << "Checking Flush Five...\n";
 
         if (hand.cards.size() < 5) {
             if (nextChecker != nullptr)

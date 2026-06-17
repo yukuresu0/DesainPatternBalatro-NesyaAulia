@@ -5,7 +5,7 @@
 class TwoPairChecker : public PokerHandChecker {
 public:
     HandRank check(const Hand& hand) override {
-        std::cout << "Checking Two Pair...\n";
+//        std::cout << "Checking Two Pair...\n";
 
         std::vector<int> countedRanks;
         int pairCount = 0;

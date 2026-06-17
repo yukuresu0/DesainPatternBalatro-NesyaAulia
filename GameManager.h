@@ -4,6 +4,7 @@
 #include "HandPlayer.h"
 #include "ScoringRule.h"
 #include "BlindRule.h"
+#include "TagSystem.h"
 
 #include "RewardManager.h"
 #include "Money.h"
@@ -17,6 +18,7 @@ public:
     void runSession();
 
 private:
+    TagSystem tagSystem;
     HandGenerator handGenerator;
     HandPlayer handPlayer;
     ScoringRule scoringRule;

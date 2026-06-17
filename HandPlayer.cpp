@@ -51,7 +51,8 @@ std::vector<Card> HandPlayer::chooseCards(
 
     std::cout << "\nChoose up to 5 cards.\n";
     std::cout << "Enter card index.\n";
-    std::cout << "Enter -1 when finished.\n\n";
+    std::cout << "Enter -1 when finished.\n";
+    std::cout << "Enter -2 to exit the game.\n\n";
 
     while (chosen.size() < 5) {
         int index;
@@ -62,6 +63,13 @@ std::vector<Card> HandPlayer::chooseCards(
             << ": ";
 
         std::cin >> index;
+        if (index == -2)
+        {
+            std::cout
+             << "\n=== Run Ended ===\n";
+
+        exit(0);
+        }
 
         if (index == -1) {
             break;

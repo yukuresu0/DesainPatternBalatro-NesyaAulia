@@ -1,7 +1,10 @@
 #include <iostream>
 #include "GameManager.h"
+#include <ctime>
+#include <cstdlib>
 
 int main() {
+    srand(time(nullptr));
     std::cout << "=== Poker Hand Checker Demo ===\n\n";
 
     GameManager gameManager;
