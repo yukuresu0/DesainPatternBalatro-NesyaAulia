@@ -5,7 +5,7 @@
 class FullHouseChecker : public PokerHandChecker {
 public:
     HandRank check(const Hand& hand) override {
-        std::cout << "Checking Full House...\n";
+//        std::cout << "Checking Full House...\n";
 
         bool hasThree = false;
         bool hasPair = false;

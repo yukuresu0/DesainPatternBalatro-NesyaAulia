@@ -6,7 +6,7 @@
 class StraightChecker : public PokerHandChecker {
 public:
     HandRank check(const Hand& hand) override {
-        std::cout << "Checking Straight...\n";
+//        std::cout << "Checking Straight...\n";
 
         if (hand.cards.size() < 5) {
             if (nextChecker != nullptr) {

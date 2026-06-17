@@ -4,7 +4,7 @@
 class PairChecker : public PokerHandChecker {
 public:
     HandRank check(const Hand& hand) override {
-    std::cout << "Checking Pair...\n";
+//    std::cout << "Checking Pair...\n";
 
     for (size_t i = 0; i < hand.cards.size(); i++) {
         int count = 0;

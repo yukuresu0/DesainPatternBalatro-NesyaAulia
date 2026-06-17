@@ -178,22 +178,6 @@ else
             continue;
         }
 
-        if(discardsRemaining > 0)
-        {
-            std::cout
-                << "2. Discard\n";
-        }
-
-            else if(actionChoice == 3)
-{
-    std::cout
-        << "\nSelection cancelled.\n";
-
-    continue;
-}
-
-        std::cin >> actionChoice;
-
         std::cout
             << "\n--- Selected Hand ---\n";
 

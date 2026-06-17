@@ -4,7 +4,7 @@
 class FourOfAKindChecker : public PokerHandChecker {
 public:
     HandRank check(const Hand& hand) override {
-        std::cout << "Checking Four of a Kind...\n";
+//       std::cout << "Checking Four of a Kind...\n";
 
         for (size_t i = 0; i < hand.cards.size(); i++) {
             int count = 0;
